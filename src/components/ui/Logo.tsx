@@ -13,21 +13,21 @@ interface LogoProps {
 const Logo = ({ className = '', showText = true }: LogoProps) => {
   const [imageError, setImageError] = useState(false)
   
-  // Check if we have a custom logo URL
-  const hasCustomLogo = !!(config.site.logoUrl && config.site.logoUrl.trim() !== '')
+  // Use logo directly from public folder
+  const logoPath = '/brand-logos/LOGO_BG.png'
   
-  // Show custom logo if we have one and no image error
-  const shouldShowCustomLogo = hasCustomLogo && !imageError
+  // Show custom logo if no image error
+  const shouldShowCustomLogo = !imageError
   
   return (
     <Link href="/" className={`flex items-center space-x-3 ${className}`}>
       {/* Logo Image or Icon */}
       <div className="logo-container flex-shrink-0">
         {shouldShowCustomLogo ? (
-          // Use custom logo from environment variable
+          // Use logo directly from public folder
           <div className="w-12 h-12 relative image-container bg-transparent flex items-center justify-center">
             <Image
-              src={config.site.logoUrl}
+              src={logoPath}
               alt={`${config.site.name} Logo`}
               width={48}
               height={48}
@@ -37,11 +37,11 @@ const Logo = ({ className = '', showText = true }: LogoProps) => {
               quality={100}
               style={{ backgroundColor: 'transparent' }}
               onError={(e) => {
-                console.error('Logo image failed to load:', config.site.logoUrl, e)
+                console.error('Logo image failed to load:', logoPath, e)
                 setImageError(true)
               }}
               onLoad={() => {
-                console.log('Logo image loaded successfully:', config.site.logoUrl)
+                console.log('Logo image loaded successfully:', logoPath)
                 setImageError(false)
               }}
             />
