@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { supabaseAdmin } from '@/lib/supabase'
+import { EmailService } from '@/lib/email-service'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-08-27.basil',
 })
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+const emailService = new EmailService()
 
 export async function POST(request: NextRequest) {
   console.log('🔔 Webhook received:', new Date().toISOString())
@@ -54,6 +56,30 @@ export async function POST(request: NextRequest) {
             console.error('Error updating order:', orderError)
           } else {
             console.log(`Order ${orderId} marked as completed`)
+            
+            // Send order confirmation email
+            try {
+              console.log('📧 Sending order confirmation email...')
+              const { data: orderData, error: fetchError } = await supabaseAdmin
+                .from('orders')
+                .select('*')
+                .eq('id', orderId)
+                .single()
+
+              if (fetchError) {
+                console.error('Error fetching order data for email:', fetchError)
+              } else if (orderData) {
+                const emailResult = await emailService.sendOrderConfirmationEmail(orderData)
+                
+                if (emailResult.success) {
+                  console.log('✅ Order confirmation email sent successfully')
+                } else {
+                  console.error('❌ Failed to send order confirmation email:', emailResult.error)
+                }
+              }
+            } catch (emailError) {
+              console.error('❌ Error sending order confirmation email:', emailError)
+            }
           }
 
           // Create payment record

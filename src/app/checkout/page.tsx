@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useCartStore } from '@/store/cartStore'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
+import { calculateTaxAndShipping, getTaxStateName } from '@/lib/tax-calculator'
 import { ArrowLeft, CreditCard, Shield, Truck, Lock, CheckCircle, AlertCircle, User } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -126,9 +127,11 @@ const PaymentForm = () => {
   
   const totalPrice = getTotalPrice()
   const totalItems = getTotalItems()
-  const shipping = totalPrice > 50 ? 0 : 5.99
-  const tax = totalPrice * 0.08
-  const finalTotal = totalPrice + shipping + tax
+  
+  // Calculate tax and shipping based on state
+  const taxCalculation = calculateTaxAndShipping(totalPrice, formData.state)
+  const { shipping, tax, total: finalTotal } = taxCalculation
+  const taxStateName = getTaxStateName(formData.state)
 
   // Update form data when user changes
   useEffect(() => {
@@ -626,13 +629,15 @@ const PaymentForm = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black font-semibold">Shipping</span>
-                  <span className="font-semibold text-green-600">
-                    {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
-                  </span>
+                  <span className="font-semibold text-green-600">${shipping.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-black font-semibold">Tax</span>
-                  <span className="font-semibold text-green-600">${tax.toFixed(2)}</span>
+                  <span className="text-black font-semibold">
+                    Sales Tax {taxStateName !== 'No Tax' ? `(${taxStateName})` : ''}
+                  </span>
+                  <span className="font-semibold text-green-600">
+                    {tax > 0 ? `$${tax.toFixed(2)}` : 'No Sales Tax'}
+                  </span>
                 </div>
                 <div className="flex justify-between text-xl font-bold border-t border-gray-200 pt-3">
                   <span className="text-black">Total</span>

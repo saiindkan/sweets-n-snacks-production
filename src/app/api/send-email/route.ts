@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     // Create mail options
     const mailOptions = {
-      from: `${process.env.FROM_NAME || 'INDKAN Sweet n Snacks'} <${process.env.FROM_EMAIL || 'noreply@indkan.com'}>`,
+      from: `${process.env.FROM_NAME || 'INDKAN Sweet n Snacks'} <${process.env.FROM_EMAIL || process.env.SMTP_FROM || 'noreply@indkan.com'}>`,
       to: to,
       subject: subject,
       html: html,

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { supabaseAdmin } from '@/lib/supabase'
+import { calculateTaxAndShipping } from '@/lib/tax-calculator'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-08-27.basil',
@@ -15,11 +16,11 @@ export async function POST(request: NextRequest) {
 
     const { items, customerInfo } = await request.json()
 
-    // Calculate total amount
+    // Calculate total amount using state-specific tax
     const subtotal = items.reduce((sum: number, item: any) => sum + (item.product.price * item.quantity), 0)
-    const shipping = subtotal > 50 ? 0 : 5.99
-    const tax = subtotal * 0.08
-    const total = subtotal + shipping + tax
+    const taxCalculation = calculateTaxAndShipping(subtotal, customerInfo.state)
+    
+    const { shipping, tax, total } = taxCalculation
 
     // Create order in database first
     const { data: order, error: orderError } = await supabaseAdmin
@@ -43,6 +44,7 @@ export async function POST(request: NextRequest) {
         items: items.map((item: any) => ({
           product_id: item.product.id,
           product_name: item.product.name,
+          product_image: item.product.image_url,
           quantity: item.quantity,
           price: item.product.price,
           total: item.product.price * item.quantity

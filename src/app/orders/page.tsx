@@ -67,7 +67,64 @@ const OrdersPage = () => {
         setError(`Failed to load orders: ${error.message}`)
       } else {
         console.log('✅ Orders loaded successfully:', data?.length || 0, 'orders')
-        setOrders(data || [])
+        
+        // Debug: Log the first order's items structure
+        if (data && data.length > 0) {
+          console.log('🔍 First order items structure:', JSON.stringify(data[0].items, null, 2))
+        }
+        
+        // Enhance orders with product images for items that don't have them
+        const enhancedOrders = await Promise.all((data || []).map(async (order) => {
+          if (order.items && Array.isArray(order.items)) {
+            const enhancedItems = await Promise.all(order.items.map(async (item: any) => {
+              // If item doesn't have product_image, try to fetch it from products table
+              if (!item.product_image && item.product_id) {
+                try {
+                  console.log('🔍 Fetching image for product:', item.product_id, item.product_name)
+                  
+                  // Try multiple approaches to find the product
+                  let productData = null
+                  
+                  // First try: exact ID match
+                  const { data: exactMatch } = await supabase
+                    .from('products')
+                    .select('image_url')
+                    .eq('id', item.product_id)
+                    .single()
+                  
+                  if (exactMatch) {
+                    productData = exactMatch
+                  } else {
+                    // Second try: name match (in case IDs don't match)
+                    const { data: nameMatch } = await supabase
+                      .from('products')
+                      .select('image_url')
+                      .eq('name', item.product_name)
+                      .single()
+                    
+                    if (nameMatch) {
+                      productData = nameMatch
+                    }
+                  }
+                  
+                  if (productData && productData.image_url) {
+                    item.product_image = productData.image_url
+                    console.log('✅ Found image for product:', item.product_name, productData.image_url)
+                  } else {
+                    console.warn('❌ No image found for product:', item.product_id, item.product_name)
+                  }
+                } catch (err) {
+                  console.warn('❌ Error fetching product image for item:', item.product_id, err)
+                }
+              }
+              return item
+            }))
+            order.items = enhancedItems
+          }
+          return order
+        }))
+        
+        setOrders(enhancedOrders)
         setError('')
       }
     } catch (err) {
@@ -111,6 +168,7 @@ const OrdersPage = () => {
       setUpdatingStatus(null)
     }
   }
+
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -294,11 +352,16 @@ const OrdersPage = () => {
                       <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                         <div className="relative w-16 h-16 flex-shrink-0">
                           <Image
-                            src={item.product_image || 'https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}
+                            src={item.product_image || item.image_url || 'https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}
                             alt={item.product_name}
                             fill
                             className="object-cover rounded-lg"
                             sizes="64px"
+                            onError={(e) => {
+                              console.error('Order item image failed to load:', item.product_name, item.product_image)
+                              // Fallback to default image
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                            }}
                           />
                         </div>
                         <div className="flex-1">
@@ -339,21 +402,21 @@ const OrdersPage = () => {
                       <h4 className="text-lg font-semibold text-gray-900 mb-3">Order Summary</h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Subtotal</span>
-                          <span className="font-semibold">${order.subtotal.toFixed(2)}</span>
+                          <span className="text-gray-900 font-medium">Subtotal</span>
+                          <span className="font-semibold text-gray-900">${order.subtotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Shipping</span>
-                          <span className="font-semibold">
+                          <span className="text-gray-900 font-medium">Shipping</span>
+                          <span className="font-semibold text-gray-900">
                             {order.shipping === 0 ? 'FREE' : `$${order.shipping.toFixed(2)}`}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Tax</span>
-                          <span className="font-semibold">${order.tax.toFixed(2)}</span>
+                          <span className="text-gray-900 font-medium">Sales Tax</span>
+                          <span className="font-semibold text-gray-900">${order.tax.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-lg font-bold border-t border-gray-300 pt-2">
-                          <span>Total</span>
+                          <span className="text-gray-900">Total</span>
                           <span className="text-green-600">${order.total.toFixed(2)}</span>
                         </div>
                       </div>

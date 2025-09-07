@@ -14,7 +14,7 @@ const mockProducts: Product[] = [
     id: 'sweet-1',
     name: 'Dry Fruit Laddu',
     description: 'Dry fruit laddu is a traditional Indian sweet made with a mixture of dry fruits, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 12.99,
+    price: 14.99,
     image_url: '/product-images/DRYFRUIT%20LADOO.jpg',
     category_id: 'sweets',
     stock_quantity: 50,
@@ -27,7 +27,7 @@ const mockProducts: Product[] = [
     id: 'sweet-2',
     name: 'Methi Laddu',
     description: 'Methi laddu is a traditional Indian sweet made with a mixture of methi seeds, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 11.99,
+    price: 14.99,
     image_url: '/product-images/METHI%20LADOO.jpg',
     category_id: 'sweets',
     stock_quantity: 45,
@@ -40,7 +40,7 @@ const mockProducts: Product[] = [
     id: 'sweet-3',
     name: 'Dink Laddu',
     description: 'Dink laddu is a traditional Indian sweet made with a mixture of dink seeds, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 9.99,
+    price: 14.99,
     image_url: '/product-images/Dink%20Laddu.jpg',
     category_id: 'sweets',
     stock_quantity: 60,
@@ -53,7 +53,7 @@ const mockProducts: Product[] = [
     id: 'sweet-4',
     name: 'Nachani Laddu',
     description: 'Nachani laddu is a traditional Indian sweet made with a mixture of nachani seeds, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 10.99,
+    price: 14.99,
     image_url: '/product-images/NACHANI%20LADOO.jpg',
     category_id: 'sweets',
     stock_quantity: 55,
@@ -66,7 +66,7 @@ const mockProducts: Product[] = [
     id: 'sweet-5',
     name: 'Besan Laddu',
     description: 'Besan laddu is a traditional Indian sweet made with a mixture of besan flour, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 8.99,
+    price: 14.99,
     image_url: '/product-images/BESAN%20LADDU.jpg',
     category_id: 'sweets',
     stock_quantity: 70,
@@ -80,7 +80,7 @@ const mockProducts: Product[] = [
     id: 'snack-1',
     name: 'Yellow Poha Chiwda',
     description: 'Yellow poha chiwda is a traditional Indian snack made with a mixture of yellow poha, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 8.99,
+    price: 14.99,
     image_url: '/product-images/Yellow%20Poha%20Chiwda.jpg',
     category_id: 'snacks',
     stock_quantity: 70,
@@ -93,7 +93,7 @@ const mockProducts: Product[] = [
     id: 'snack-2',
     name: 'Sweet Shankarpale',
     description: 'Sweet shankarpale is a traditional Indian snack made with a mixture of sweet shankarpale, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 7.99,
+    price: 14.99,
     image_url: '/product-images/SHANKARAPALLE.jpg',
     category_id: 'snacks',
     stock_quantity: 65,
@@ -106,7 +106,7 @@ const mockProducts: Product[] = [
     id: 'snack-3',
     name: 'Bhaajani Chakli',
     description: 'Bhaajani chakli is a traditional Indian snack made with a mixture of bhaajani chakli, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 6.99,
+    price: 14.99,
     image_url: '/product-images/CHAKLI.jpg',
     category_id: 'snacks',
     stock_quantity: 80,
@@ -119,7 +119,7 @@ const mockProducts: Product[] = [
     id: 'snack-4',
     name: 'Teekha Sev',
     description: 'Teekha sev is a traditional Indian snack made with a mixture of teekha sev, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 9.99,
+    price: 14.99,
     image_url: '/product-images/TheekaSev.jpg',
     category_id: 'snacks',
     stock_quantity: 55,
@@ -132,7 +132,7 @@ const mockProducts: Product[] = [
     id: 'snack-5',
     name: 'Khajur Laddu',
     description: 'Khajur laddu is a traditional Indian snack made with a mixture of khajur dates, sugar, and ghee. It is a popular festive treat and is often served during weddings and other special occasions.',
-    price: 11.99,
+    price: 14.99,
     image_url: '/product-images/KHAJUR%20LADDU.jpg',
     category_id: 'snacks',
     stock_quantity: 40,
@@ -391,25 +391,43 @@ const ProductsPage = () => {
       filtered = filtered.filter(product => product.category_id === selectedCategory)
     }
 
-    // Sweet level filter (for sweets category)
+    // Sweet level filter (for sweets category) - now based on product name/description
     if (selectedSweetLevel !== 'all' && selectedCategory === 'sweets') {
       if (selectedSweetLevel === 'low') {
-        filtered = filtered.filter(product => product.price < 15)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('besan') || 
+          product.name.toLowerCase().includes('dink')
+        )
       } else if (selectedSweetLevel === 'medium') {
-        filtered = filtered.filter(product => product.price >= 15 && product.price < 20)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('methi') || 
+          product.name.toLowerCase().includes('nachani')
+        )
       } else if (selectedSweetLevel === 'high') {
-        filtered = filtered.filter(product => product.price >= 20)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('dry fruit') || 
+          product.name.toLowerCase().includes('khajur')
+        )
       }
     }
 
-    // Spice level filter (for snacks category)
+    // Spice level filter (for snacks category) - now based on product name/description
     if (selectedSpiceLevel !== 'all' && selectedCategory === 'snacks') {
       if (selectedSpiceLevel === 'mild') {
-        filtered = filtered.filter(product => product.price < 12)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('sweet') || 
+          product.name.toLowerCase().includes('yellow')
+        )
       } else if (selectedSpiceLevel === 'medium') {
-        filtered = filtered.filter(product => product.price >= 12 && product.price < 15)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('chakli') || 
+          product.name.toLowerCase().includes('shankarpale')
+        )
       } else if (selectedSpiceLevel === 'hot') {
-        filtered = filtered.filter(product => product.price >= 15)
+        filtered = filtered.filter(product => 
+          product.name.toLowerCase().includes('teekha') || 
+          product.name.toLowerCase().includes('sev')
+        )
       }
     }
 

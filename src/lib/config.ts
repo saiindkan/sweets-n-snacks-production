@@ -18,7 +18,7 @@ export const config = {
       user: process.env.SMTP_USER!,
       pass: process.env.SMTP_PASS!,
     },
-    fromEmail: process.env.FROM_EMAIL || 'noreply@indkan.com',
+    fromEmail: process.env.FROM_EMAIL || process.env.SMTP_FROM || 'noreply@indkan.com',
     fromName: process.env.FROM_NAME || 'INDKAN Sweet n Snacks',
   },
 

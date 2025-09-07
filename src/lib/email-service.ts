@@ -18,7 +18,9 @@ export class EmailService {
 
   async sendEmail({ to, subject, html, text }: EmailData): Promise<{ success: boolean; error?: string }> {
     try {
-      const response = await fetch('/api/send-email', {
+      // Use absolute URL for server-side calls
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
+      const response = await fetch(`${baseUrl}/api/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -276,7 +278,7 @@ export class EmailService {
                   <span>${orderData.shipping === 0 ? 'FREE' : formatPrice(orderData.shipping)}</span>
                 </div>
                 <div class="total-row">
-                  <span>Tax:</span>
+                  <span>Sales Tax:</span>
                   <span>${formatPrice(orderData.tax)}</span>
                 </div>
                 <div class="total-row total-final">

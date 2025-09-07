@@ -2,6 +2,7 @@
 
 import { useCartStore } from '@/store/cartStore'
 import { useAuth } from '@/contexts/AuthContext'
+import { calculateTaxAndShipping, getTaxStateName } from '@/lib/tax-calculator'
 import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag, Heart, User } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,9 +23,11 @@ const CartPage = () => {
 
   const totalPrice = getTotalPrice()
   const totalItems = getTotalItems()
-  const shipping = totalPrice > 50 ? 0 : 5.99
-  const tax = totalPrice * 0.08 // 8% tax
-  const finalTotal = totalPrice + shipping + tax
+  
+  // For cart page, we'll show estimated tax (no state selected yet)
+  // Default to no tax until user selects state in checkout
+  const taxCalculation = calculateTaxAndShipping(totalPrice, '')
+  const { shipping, tax, total: finalTotal } = taxCalculation
 
   const handleRemoveItem = async (productId: string) => {
     setIsRemoving(productId)
@@ -222,18 +225,14 @@ const CartPage = () => {
                 
                 <div className="flex justify-between">
                   <span className="text-gray-800 font-semibold">Shipping</span>
-                  <span className="font-bold text-gray-900">
-                    {shipping === 0 ? (
-                      <span className="text-green-600">FREE</span>
-                    ) : (
-                      `$${shipping.toFixed(2)}`
-                    )}
-                  </span>
+                  <span className="font-bold text-gray-900">${shipping.toFixed(2)}</span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-800 font-semibold">Tax</span>
-                  <span className="font-bold text-gray-900">${tax.toFixed(2)}</span>
+                  <span className="text-gray-800 font-semibold">Sales Tax (Estimated)</span>
+                  <span className="font-bold text-gray-900">
+                    {tax > 0 ? `$${tax.toFixed(2)}` : 'No Sales Tax'}
+                  </span>
                 </div>
                 
                 <div className="border-t border-gray-300 pt-4">
