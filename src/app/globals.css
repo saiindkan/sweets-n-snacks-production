@@ -1,0 +1,558 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 251, 235; /* amber-50 */
+  --background-mid-rgb: 255, 247, 237;   /* orange-50 */
+  --background-end-rgb: 254, 242, 242;   /* red-50 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 255, 251, 235; /* Keep hero theme even in dark mode */
+    --background-mid-rgb: 255, 247, 237;
+    --background-end-rgb: 254, 242, 242;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom right,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-mid-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+  overflow-x: hidden;
+  font-size: 1.2rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Global decorative elements for hero theme consistency */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(239, 68, 68, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  
+  @keyframes gentle-float {
+    0%, 100% {
+      transform: translateY(0px);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-10px);
+      opacity: 0.6;
+    }
+  }
+  
+  /* Premium Background Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+  
+  .animate-glow {
+    animation: glow 4s ease-in-out infinite alternate;
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  @keyframes blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Card animations */
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-animate {
+  animation: cardSlideIn 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Enhanced shadow utilities */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Gradient text utilities */
+.gradient-text-pink {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #f97316, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Optimize text sizes for mobile */
+  .mobile-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  /* Improve form inputs on mobile */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1280px) {
+  .xl-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Premium Background Keyframe Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gentle-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in-out {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Image loading optimizations */
+.image-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-loaded {
+  opacity: 1;
+}
+
+/* Prevent layout shift during image loading */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Logo specific optimizations */
+.logo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.logo-container .image-container {
+  background: transparent !important;
+}
+
+.logo-container img {
+  background: transparent !important;
+}
+
+.logo-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.logo-default:hover {
+  transform: scale(1.05);
+}
+
+/* New Festive Effects Animations */
+@keyframes firework-explosion {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes firework-particle {
+  0% {
+    transform: rotate(var(--rotation)) translateX(0px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--rotation)) translateX(60px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes success-slide {
+  0% {
+    transform: translate(-50%, -100px);
+    opacity: 0;
+  }
+  15%, 85% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -100px);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-rays {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--rotation)) translateY(-50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(var(--rotation)) translateY(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--rotation)) translateY(-50%) scale(1.2);
+  }
+}
+
+@keyframes ray-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: rotate(var(--rotation)) translateY(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: rotate(var(--rotation)) translateY(-50%) scale(1.2);
+  }
+}
+
+@keyframes celebration-particle {
+  0% {
+    transform: translateY(0px) scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(-20px) scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-40px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-emoji {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.1) rotate(540deg);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1) rotate(720deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(900deg);
+    opacity: 0;
+  }
+}
+
+.animate-firework-explosion {
+  animation: firework-explosion ease-out forwards;
+}
+
+.animate-firework-particle {
+  animation: firework-particle ease-out forwards;
+}
+
+.animate-success-slide {
+  animation: success-slide 5s ease-in-out forwards;
+}
+
+.animate-celebration-rays {
+  animation: celebration-rays 3s ease-in-out infinite;
+}
+
+.animate-ray-pulse {
+  animation: ray-pulse 2s ease-in-out infinite;
+}
+
+.animate-celebration-particle {
+  animation: celebration-particle ease-out forwards;
+}
+
+.animate-celebration-emoji {
+  animation: celebration-emoji ease-in-out forwards;
+}
+
+/* Additional festive animations */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+/* Enhanced image card effects */
+.scale-102 {
+  transform: scale(1.02);
+}
+
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Image hover effects */
+.group:hover .group-hover\:scale-105 {
+  transform: scale(1.05);
+}
+
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+.group:hover .group-hover\:shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+}
