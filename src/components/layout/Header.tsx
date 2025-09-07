@@ -110,15 +110,17 @@ const Header = () => {
                     <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                       {/* User Info Header */}
                       <div className="p-4 border-b border-gray-100 bg-gray-50 rounded-t-xl">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
                             {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
                           </div>
-                          <div>
-                            <p className="text-sm font-semibold text-gray-900">
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold text-gray-900 truncate">
                               {user.user_metadata?.full_name || 'User'}
                             </p>
-                            <p className="text-xs text-gray-500">{user.email}</p>
+                            <p className="text-xs text-gray-500 break-all leading-tight mt-1">
+                              {user.email}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -219,15 +221,17 @@ const Header = () => {
               <div className="border-t border-gray-200 pt-4 mt-4">
                 {user ? (
                   <div className="px-3 py-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                    <div className="flex items-start space-x-3 mb-3">
+                      <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
                         {(user.user_metadata?.full_name || user.email || 'U').charAt(0).toUpperCase()}
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-semibold text-gray-900 truncate">
                           {user.user_metadata?.full_name || 'User'}
                         </p>
-                        <p className="text-xs text-gray-500">{user.email}</p>
+                        <p className="text-xs text-gray-500 break-all leading-tight mt-1">
+                          {user.email}
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-1">
