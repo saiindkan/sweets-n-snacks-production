@@ -11,31 +11,31 @@ const ImageCarousel = () => {
   const images = [
     {
       id: 1,
-      src: "/intro sliideshow/delicious-indian-dessert-arrangement-view.jpg",
+      src: "/intro-slideshow/delicious-indian-dessert-arrangement-view.jpg",
       alt: "Delicious Indian dessert arrangement",
       title: "Traditional Sweets Collection"
     },
     {
       id: 2,
-      src: "/intro sliideshow/festive-indian-sweets-decorations-diwali.jpg",
+      src: "/intro-slideshow/festive-indian-sweets-decorations-diwali.jpg",
       alt: "Festive Indian sweets decorations",
       title: "Festive Delights"
     },
     {
       id: 3,
-      src: "/intro sliideshow/from-assorted-baked-with-baklava-baklava-sheki-flowers-smoked-fish.jpg",
+      src: "/intro-slideshow/from-assorted-baked-with-baklava-baklava-sheki-flowers-smoked-fish.jpg",
       alt: "Assorted Indian sweets and desserts",
       title: "Premium Collection"
     },
     {
       id: 4,
-      src: "/intro sliideshow/high-angle-delicious-sweets-plate.jpg",
+      src: "/intro-slideshow/high-angle-delicious-sweets-plate.jpg",
       alt: "High angle view of delicious sweets plate",
       title: "Artisan Creations"
     },
     {
       id: 5,
-      src: "/intro sliideshow/high-angle-indian-dessert-bowl.jpg",
+      src: "/intro-slideshow/high-angle-indian-dessert-bowl.jpg",
       alt: "Indian dessert bowl with traditional sweets",
       title: "Traditional Treats"
     }

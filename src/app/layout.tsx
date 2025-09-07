@@ -43,7 +43,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/Brand Logos/LOGO_BG.png"
+          href="/brand-logos/LOGO_BG.png"
         />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col`}>

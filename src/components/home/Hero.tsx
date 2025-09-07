@@ -70,7 +70,7 @@ const Hero = () => {
                   {/* Image Container */}
                   <div className="absolute inset-6 overflow-hidden rounded-lg">
                     <Image
-                      src="/intro sliideshow/pexels-gaurav-kumar-1281378-18488297.jpg"
+                      src="/intro-slideshow/pexels-gaurav-kumar-1281378-18488297.jpg"
                       alt="Traditional Indian sweets and snacks - Premium collection by Gaurav Kumar"
                       fill
                       className="object-cover -rotate-90 transition-transform duration-700 group-hover:scale-110"
