@@ -465,7 +465,7 @@ const PaymentForm = () => {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+1 (551) 225-4096"
                   className={`w-full px-4 py-3 border-2 rounded-lg text-lg font-medium text-gray-900 bg-white ${
                     errors.phone ? 'border-red-500' : 'border-gray-300 focus:border-amber-500'
                   } focus:outline-none`}

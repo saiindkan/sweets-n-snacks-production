@@ -35,7 +35,7 @@ const ContactPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <a
-                href="tel:+15551234567"
+                href="tel:+15512254096"
                 className="group bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-amber-500/25 text-center relative overflow-hidden"
               >
                 <span className="relative z-10 flex items-center justify-center">
@@ -45,7 +45,7 @@ const ContactPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </a>
               <a
-                href="mailto:indkanwweximllc@gmail.com"
+                href="mailto:info@indkanworldwideexim.com"
                 className="border-2 sm:border-3 border-amber-600 text-amber-700 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base lg:text-lg hover:bg-amber-50 transition-all duration-300 transform hover:scale-105 text-center bg-white/80 backdrop-blur-sm shadow-lg"
               >
                 Email Us
@@ -160,7 +160,7 @@ const ContactPage = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Phone</h3>
-                <p className="text-gray-700">+1 (555) 123-4567</p>
+                <p className="text-gray-700">+1 (551) 225-4096</p>
               </div>
             </div>
             
@@ -170,7 +170,7 @@ const ContactPage = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                <p className="text-gray-700">indkanwweximllc@gmail.com</p>
+                <p className="text-gray-700">info@indkanworldwideexim.com</p>
               </div>
             </div>
             
@@ -197,13 +197,13 @@ const ContactPage = () => {
             <h2 className="text-3xl font-bold text-white">Prefer to reach us directly?</h2>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
-                href="tel:+15551234567"
+                href="tel:+15512254096"
                 className="bg-white text-amber-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
-                Call: +1 (555) 123-4567
+                Call: +1 (551) 225-4096
               </a>
               <a
-                href="mailto:indkanwweximllc@gmail.com"
+                href="mailto:info@indkanworldwideexim.com"
                 className="border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-amber-600 transition-all duration-300 transform hover:scale-105"
               >
                 Email Us
